@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">GIBX Admin Daily Report</string>
+
+    <string name="corporate">CORPORATE</string>
+    <string name="ywc">YES WE CARE</string>
+    <string name="mlm_f">MLM-F</string>
+    <string name="mlm_i">MLM-I</string>
+    <string name="today">Today:</string>
+    <string name="running">Running:</string>
+    <string name="total">Total:</string>
+    <string name="last_update">Last Update:</string>
+    <string name="refresh">Refresh</string>
+    <string name="date">Date:</string>
+    <string name="update">Press the refresh button to update</string>
+    <string name="action_settings">Settings</string>
+</resources>
