@@ -22,4 +22,6 @@ public class Tab1 extends Fragment {
         lblDate.setText(date);
         return v;
     }
+
+
 }

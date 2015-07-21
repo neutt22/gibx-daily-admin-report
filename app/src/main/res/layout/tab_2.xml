@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/LightSalmon">
+    android:background="@color/F360">
 
     <ScrollView
         android:layout_width="fill_parent"
@@ -10,8 +10,9 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/F360">
+            android:layout_height="wrap_content"
+            android:background="@color/F360"
+            android:nestedScrollingEnabled="false">
 
             <TextView
                 android:layout_width="fill_parent"
@@ -103,7 +104,7 @@
                 android:layout_width="162dp"
                 android:layout_height="wrap_content"
                 android:text="@string/btn_update"
-                android:id="@+id/button"
+                android:id="@+id/btnPush"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/update_button"
