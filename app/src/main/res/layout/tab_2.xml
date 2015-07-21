@@ -1,50 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/F360"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/LightSalmon">
 
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/F360">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/corporate"
-        android:id="@+id/textView18"
-        android:textColor="@color/Ivory"
-        android:layout_alignParentTop="true" />
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/corporate"
+                android:id="@+id/textView"
+                android:singleLine="false"
+                android:textColor="@color/Ivory"
+                android:gravity="center_horizontal"
+                android:paddingTop="10dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/ywc"
-        android:id="@+id/textView"
-        android:textColor="@color/Ivory"
-        android:layout_below="@+id/textView18"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="85dp" />
+            <EditText
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
+                android:id="@+id/txtCorpoToday"
+                android:hint="@string/today"
+                android:layout_gravity="center_horizontal" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/mlm_f"
-        android:id="@+id/textView19"
-        android:textColor="@color/Ivory"
-        android:layout_below="@+id/textView"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="85dp" />
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/ywc"
+                android:id="@+id/textView18"
+                android:singleLine="false"
+                android:textColor="@color/Ivory"
+                android:gravity="center_horizontal"
+                android:paddingTop="10dp"
+                android:autoText="false"
+                android:layout_marginTop="50dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/mlm_i"
-        android:id="@+id/textView20"
-        android:textColor="@color/Ivory"
-        android:layout_marginTop="85dp"
-        android:layout_below="@+id/textView19"
-        android:layout_alignParentStart="true" />
+            <EditText
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
+                android:id="@+id/txtYWCToday"
+                android:hint="@string/today"
+                android:layout_gravity="center_horizontal" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/mlm_f"
+                android:id="@+id/textView19"
+                android:singleLine="false"
+                android:textColor="@color/Ivory"
+                android:gravity="center_horizontal"
+                android:paddingTop="10dp"
+                android:autoText="false"
+                android:layout_marginTop="50dp" />
+
+            <EditText
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
+                android:id="@+id/txtMLMFToday"
+                android:hint="@string/today"
+                android:layout_gravity="center_horizontal" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/mlm_i"
+                android:id="@+id/textView20"
+                android:singleLine="false"
+                android:textColor="@color/Ivory"
+                android:gravity="center_horizontal"
+                android:paddingTop="10dp"
+                android:autoText="false"
+                android:layout_marginTop="50dp" />
+
+            <EditText
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
+                android:id="@+id/txtMLMIToday"
+                android:hint="@string/today"
+                android:layout_gravity="center_horizontal" />
+
+            <Button
+                android:layout_width="162dp"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_update"
+                android:id="@+id/button"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/update_button"
+                android:textColor="@color/Ivory" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

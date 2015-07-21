@@ -12,5 +12,6 @@
     <string name="refresh">Refresh</string>
     <string name="date">Date:</string>
     <string name="update">Press the refresh button to update</string>
+    <string name="btn_update">Push Updates</string>
     <string name="action_settings">Settings</string>
 </resources>
