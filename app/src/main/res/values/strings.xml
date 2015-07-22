@@ -13,5 +13,7 @@
     <string name="date">Date:</string>
     <string name="update">Press the refresh button to update</string>
     <string name="btn_update">Push Updates</string>
+    <string name="default_value">please update</string>
+    <string name="default_text_value">0</string>
     <string name="action_settings">Settings</string>
 </resources>

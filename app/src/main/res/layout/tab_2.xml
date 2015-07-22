@@ -32,6 +32,7 @@
                 android:ems="10"
                 android:id="@+id/txtCorpoToday"
                 android:hint="@string/today"
+                android:text="@string/default_text_value"
                 android:layout_gravity="center_horizontal" />
 
             <TextView
@@ -54,6 +55,7 @@
                 android:ems="10"
                 android:id="@+id/txtYWCToday"
                 android:hint="@string/today"
+                android:text="@string/default_text_value"
                 android:layout_gravity="center_horizontal" />
 
             <TextView
@@ -76,6 +78,7 @@
                 android:ems="10"
                 android:id="@+id/txtMLMFToday"
                 android:hint="@string/today"
+                android:text="@string/default_text_value"
                 android:layout_gravity="center_horizontal" />
 
             <TextView
@@ -98,6 +101,7 @@
                 android:ems="10"
                 android:id="@+id/txtMLMIToday"
                 android:hint="@string/today"
+                android:text="@string/default_text_value"
                 android:layout_gravity="center_horizontal" />
 
             <Button
