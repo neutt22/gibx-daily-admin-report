@@ -51,11 +51,6 @@ public class MainActivity extends AppCompatActivity {
         tabs.setViewPager(pager);
     }
 
-    public void onUpdate(View view){
-        Log.i("Hello", "button");
-    }
-
-
     public void refreshClicked(View view){
         TextView lblUpdate = (TextView) findViewById(R.id.lblUpdate);
         lblUpdate.setText("Updating, please wait...");

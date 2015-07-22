@@ -1,9 +1,11 @@
 package jim.gibx.gibco.guevent.com.gibxadmindailyreport;
 
+import android.content.Context;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -33,34 +35,28 @@ public class ButtonHandler implements View.OnClickListener {
                 txtMLMFToday.getText().toString(),
                 txtMLMIToday.getText().toString() );
         Gson gson = new Gson();
-        sendJson(gson.toJson(today));
+        sendJson(gson.toJson(today), v);
         Log.i("JSON: " + gson.toJson(today), "onclick");
     }
 
-    private void sendJson(String json){
+    private void sendJson(String json, View v){
         if (android.os.Build.VERSION.SDK_INT > 9)
         {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
         HttpURLConnection httpCon;
-        String url = "http://yeswecare.16mb.com/upload/";
+        //String url = "http://yeswecare.16mb.com/upload/";
+        String url = "http://10.0.2.2/addSale?today=" + json;
         try{
             httpCon = (HttpURLConnection) ((new URL(url).openConnection()));
-           // httpCon.setDoOutput(true);
-            //httpCon.setRequestProperty("Content-Type", "application/json");
-           // httpCon.setRequestProperty("Accept", "application/json");
-            httpCon.setRequestProperty("User-Agent","Mozilla/5.0 ( compatible ) ");
-            httpCon.setRequestProperty("Accept","*/*");
+            httpCon.setDoOutput(false);
+            httpCon.setRequestProperty("Content-Type", "application/json");
+            httpCon.setRequestProperty("Accept", "application/json");
+            httpCon.setRequestProperty("User-Agent", "Mozilla/5.0 ( compatible ) ");
+            httpCon.setRequestProperty("Accept", "*/*");
             httpCon.setRequestMethod("GET");
             httpCon.connect();
-
-            OutputStream os = httpCon.getOutputStream();
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
-            bw.write("today=" + json);
-            bw.close();
-
-            os.close();
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(httpCon.getInputStream(), "UTF-8"));
             String line = null;
@@ -69,7 +65,11 @@ public class ButtonHandler implements View.OnClickListener {
                 builder.append(line);
             }
             reader.close();
-            Log.i("RESULT: " + builder.toString(), "res");
+
+            Context context = v.getContext();
+            CharSequence text = "Nice. Sales Report pushed to server! ;)";
+            Toast t = Toast.makeText(context, text, Toast.LENGTH_LONG);
+            t.show();
 
         }catch(Exception e){
             e.printStackTrace();
