@@ -69,14 +69,14 @@ public class MainActivity extends AppCompatActivity {
         setTab1Views();
 
         GIBXConnection todayConnection = new GIBXConnection();
-        boolean hasToday = todayConnection.requestDate(d.toString(), view, "today"); //request today, 'false' being not the running.json
+        boolean hasToday = todayConnection.requestDate("date=" + "07-24-2015", view, "today"); //request today, 'false' being not the running.json
         if(hasToday){
             SaleToday saleToday = todayConnection.getSale();
             renderToday(saleToday);
         }
 
         GIBXConnection runningConnection = new GIBXConnection();
-        boolean hasRunning = runningConnection.requestDate("running", view, "running"); //request running.json, set to 'true'
+        boolean hasRunning = runningConnection.requestDate("running=true", view, "running"); //request running.json, set to 'true'
         if(hasRunning){
             SaleToday saleRunning = runningConnection.getSale();
             renderRunning(saleRunning);
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
         //ToDo: Update the 'Last Admin Update:' label on Tab 1, so we will know how long he is not updating
         //ToDo: App is crushing when there's no right {date}.json file found lol
-
+        //ToDo: Add export/email feature
         lblUpdate.setText("Press the refresh button to update");
     }
 

@@ -47,8 +47,8 @@ public class ButtonHandler implements View.OnClickListener {
             StrictMode.setThreadPolicy(policy);
         }
         HttpURLConnection httpCon;
-        //String url = "http://yeswecare.16mb.com/addSale?today=" + json;
-        String url = "http://10.0.2.2/addSale?today=" + json;
+        String url = "http://yeswecare.16mb.com/addSale?today=" + json;
+        //String url = "http://10.0.2.2/addSale?today=" + json;
         try{
             httpCon = (HttpURLConnection) ((new URL(url).openConnection()));
             httpCon.setDoOutput(false);

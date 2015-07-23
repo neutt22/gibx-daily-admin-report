@@ -3,6 +3,7 @@ package jim.gibx.gibco.guevent.com.gibxadmindailyreport;
 
 import android.content.Context;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,8 +31,8 @@ public class GIBXConnection {
 
     public boolean requestDate(String date, View v, String msg){
         HttpURLConnection httpCon;
-        //String url = "http://yeswecare.16mb.com/getSale?date=" + date;
-        String url = "http://10.0.2.2/getSale?date=" + date;
+        String url = "http://yeswecare.16mb.com/getSale?" + date;
+        //String url = "http://10.0.2.2/getSale?" + date;
         try{
             httpCon = (HttpURLConnection) ((new URL(url).openConnection()));
             httpCon.setDoOutput(false);
@@ -49,7 +50,7 @@ public class GIBXConnection {
                 builder.append(line);
             }
             reader.close();
-
+            Log.d("ERR: " + builder.toString(), "builder of " + msg);
             Context context = v.getContext();
             CharSequence text;
             if(builder.toString().equals("error_date")) {
