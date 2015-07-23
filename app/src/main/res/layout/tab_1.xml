@@ -51,7 +51,8 @@
         android:id="@+id/textView5"
         android:textColor="@color/Ivory"
         android:layout_below="@+id/textView4"
-        android:layout_alignEnd="@+id/textView4" />
+        android:layout_alignEnd="@+id/textView4"
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -73,7 +74,8 @@
         android:id="@+id/textView7"
         android:textColor="@color/Ivory"
         android:layout_below="@+id/textView9"
-        android:layout_alignEnd="@+id/textView3" />
+        android:layout_alignEnd="@+id/textView3"
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -135,7 +137,8 @@
         android:id="@+id/textView13"
         android:textColor="@color/Ivory"
         android:layout_below="@+id/textView11"
-        android:layout_alignEnd="@+id/textView11" />
+        android:layout_alignEnd="@+id/textView11"
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -177,7 +180,8 @@
         android:id="@+id/textView17"
         android:textColor="@color/Ivory"
         android:layout_below="@+id/textView16"
-        android:layout_alignEnd="@+id/textView16" />
+        android:layout_alignEnd="@+id/textView16"
+        android:textStyle="bold" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -251,7 +255,7 @@
         android:textColor="@color/Ivory"
         android:layout_below="@+id/textView4"
         android:layout_toEndOf="@+id/textView4"
-        android:textStyle="italic" />
+        android:textStyle="bold|italic" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -326,7 +330,7 @@
         android:text="@string/default_value"
         android:id="@+id/txtYWCTotal1"
         android:textColor="@color/Ivory"
-        android:textStyle="italic"
+        android:textStyle="bold|italic"
         android:layout_below="@+id/textView9"
         android:layout_toEndOf="@+id/textView9" />
 
@@ -337,9 +341,9 @@
         android:text="@string/default_value"
         android:id="@+id/txtMLMFTotal1"
         android:textColor="@color/Ivory"
-        android:textStyle="italic"
-        android:layout_alignTop="@+id/textView13"
-        android:layout_alignEnd="@+id/txtMLMFRunning1" />
+        android:textStyle="bold|italic"
+        android:layout_below="@+id/txtMLMFRunning1"
+        android:layout_toEndOf="@+id/textView13" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -348,8 +352,8 @@
         android:text="@string/default_value"
         android:id="@+id/txtMLMITotal1"
         android:textColor="@color/Ivory"
-        android:textStyle="italic"
-        android:layout_alignTop="@+id/textView17"
-        android:layout_alignEnd="@+id/txtMLMIRunning1" />
+        android:textStyle="bold|italic"
+        android:layout_below="@+id/txtMLMIRunning1"
+        android:layout_toEndOf="@+id/textView17" />
 
 </RelativeLayout>

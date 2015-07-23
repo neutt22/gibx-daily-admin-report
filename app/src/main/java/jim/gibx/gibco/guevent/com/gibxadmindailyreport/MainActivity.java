@@ -67,8 +67,29 @@ public class MainActivity extends AppCompatActivity {
         lblUpdate.setText("Updating, please wait...");
         CharSequence d = android.text.format.DateFormat.format("MM-dd-yyyy", new Date().getTime());
         setTab1Views();
-        requestDate(d.toString(), view, false); //request today, 'false' being not the running.json
-        requestDate("running", view, true);     //request running.json, set to 'true'
+
+        GIBXConnection todayConnection = new GIBXConnection();
+        boolean hasToday = todayConnection.requestDate(d.toString(), view, "today"); //request today, 'false' being not the running.json
+        if(hasToday){
+            SaleToday saleToday = todayConnection.getSale();
+            renderToday(saleToday);
+        }
+
+        GIBXConnection runningConnection = new GIBXConnection();
+        boolean hasRunning = runningConnection.requestDate("running", view, "running"); //request running.json, set to 'true'
+        if(hasRunning){
+            SaleToday saleRunning = runningConnection.getSale();
+            renderRunning(saleRunning);
+        }
+
+        if(hasToday && hasRunning){
+            renderTotal();
+        }
+
+        //ToDo: Update the 'Last Admin Update:' label on Tab 1, so we will know how long he is not updating
+        //ToDo: App is crushing when there's no right {date}.json file found lol
+
+        lblUpdate.setText("Press the refresh button to update");
     }
 
     @Override
@@ -95,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView txtCorpoToday1, txtYWCToday1, txtMLMFToday1, txtMLMIToday1;
     private TextView txtCorpoRunning1, txtYWCRunning1, txtMLMFRunning1, txtMLMIRunning1;
+    private TextView txtCorpoTotal1, txtYWCTotal1, txtMLMFTotal1, txtMLMITotal1;
 
     private void setTab1Views(){
         if(defined) return;
@@ -108,65 +130,55 @@ public class MainActivity extends AppCompatActivity {
         txtYWCRunning1 = (TextView) findViewById(R.id.txtYWCRunning1);
         txtMLMFRunning1 = (TextView) findViewById(R.id.txtMLMFRunning1);
         txtMLMIRunning1 = (TextView) findViewById(R.id.txtMLMIRunning1);
+
+        txtCorpoTotal1 = (TextView) findViewById(R.id.txtCorpoTotal1);
+        txtYWCTotal1 = (TextView) findViewById(R.id.txtYWCTotal1);
+        txtMLMFTotal1 = (TextView) findViewById(R.id.txtMLMFTotal1);
+        txtMLMITotal1 = (TextView) findViewById(R.id.txtMLMITotal1);
     }
 
-    private void requestDate(String date, View v, boolean running){
-        if (android.os.Build.VERSION.SDK_INT > 9)
-        {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-        }
-        HttpURLConnection httpCon;
-        //String url = "http://yeswecare.16mb.com/upload/";
-        String url = "http://10.0.2.2/getSale?date=" + date;
-        try{
-            httpCon = (HttpURLConnection) ((new URL(url).openConnection()));
-            httpCon.setDoOutput(false);
-            httpCon.setRequestProperty("Content-Type", "application/json");
-            httpCon.setRequestProperty("Accept", "application/json");
-            httpCon.setRequestProperty("User-Agent", "Mozilla/5.0 ( compatible ) ");
-            httpCon.setRequestProperty("Accept", "*/*");
-            httpCon.setRequestMethod("GET");
-            httpCon.connect();
+    private boolean hasToday = false;
+    private void renderToday(SaleToday today){
+        txtCorpoToday1.setText(today.getCorpo());
+        txtYWCToday1.setText(today.getYwc());
+        txtMLMFToday1.setText(today.getMlmF());
+        txtMLMIToday1.setText(today.getMlmI());
+    }
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(httpCon.getInputStream(), "UTF-8"));
-            String line = null;
-            StringBuilder builder = new StringBuilder();
-            while((line = reader.readLine()) != null){
-                builder.append(line);
-            }
-            reader.close();
+    private void renderTotal(){
+        int corpoToday = Integer.parseInt(txtCorpoToday1.getText().toString());
+        int corpoRunning = Integer.parseInt(txtCorpoRunning1.getText().toString());
+        int corpoTotal = corpoRunning + corpoToday;
+        txtCorpoTotal1.setText(corpoTotal + "");
 
-            Context context = v.getContext();
-            CharSequence text;
-            if(builder.toString().equals("error_date")){
-                text = "Failed. Sir Roman might not yet updated today. This is bad!";
-                Toast t = Toast.makeText(context, text, Toast.LENGTH_LONG);
-                t.show();
-                return;
-            }
+        int ywcToday = Integer.parseInt(txtYWCToday1.getText().toString());
+        int ywcRunning = Integer.parseInt(txtYWCRunning1.getText().toString());
+        int ywcTotal = ywcRunning + ywcToday;
+        txtYWCTotal1.setText(ywcTotal + "");
 
-            SaleToday sale = new Gson().fromJson(builder.toString(), SaleToday.class);
-            text = "Successfully retrieved report ;)";
-            Toast t = Toast.makeText(context, text, Toast.LENGTH_LONG);
-            t.show();
+        int mlmFToday = Integer.parseInt(txtMLMFToday1.getText().toString());
+        int mlmFRunning = Integer.parseInt(txtMLMFRunning1.getText().toString());
+        int mlmFTotal = mlmFRunning + mlmFToday;
+        txtMLMFTotal1.setText(mlmFTotal + "");
 
-            if(!running) {
-                txtCorpoToday1.setText(sale.getCorpo());
-                txtYWCToday1.setText(sale.getYwc());
-                txtMLMFToday1.setText(sale.getMlmF());
-                txtMLMIToday1.setText(sale.getMlmI());
-            }else{
-                txtCorpoRunning1.setText(sale.getCorpo());
-                txtYWCRunning1.setText(sale.getYwc());
-                txtMLMFRunning1.setText(sale.getMlmF());
-                txtMLMIRunning1.setText(sale.getMlmI());
-            }
+        int mlmIToday = Integer.parseInt(txtMLMIToday1.getText().toString());
+        int mlmIRunning = Integer.parseInt(txtMLMIRunning1.getText().toString());
+        int mlmITotal = mlmIRunning + mlmIToday;
+        txtMLMITotal1.setText(mlmITotal + "");
+    }
 
-            TextView lblUpdate = (TextView) findViewById(R.id.lblUpdate);
-            lblUpdate.setText("Press the refresh button to update");
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+    //formula: Running = Running - Today
+    private void renderRunning(SaleToday sale){
+        int corpoRunning = Integer.parseInt(sale.getCorpo()); // - Integer.parseInt(txtCorpoToday1.getText().toString());
+        txtCorpoRunning1.setText(corpoRunning + "");
+
+        int ywcRunning = Integer.parseInt(sale.getYwc()); // - Integer.parseInt(txtYWCToday1.getText().toString());
+        txtYWCRunning1.setText(ywcRunning + "");
+
+        int mlmFRunning = Integer.parseInt(sale.getMlmF()); // - Integer.parseInt(txtMLMFToday1.getText().toString());
+        txtMLMFRunning1.setText(mlmFRunning + "");
+
+        int mlmIRunning = Integer.parseInt(sale.getMlmI()); // - Integer.parseInt(txtMLMIToday1.getText().toString());
+        txtMLMIRunning1.setText(mlmIRunning + "");
     }
 }

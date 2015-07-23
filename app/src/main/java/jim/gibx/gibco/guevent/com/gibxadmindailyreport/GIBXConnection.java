@@ -1,54 +1,37 @@
 package jim.gibx.gibco.guevent.com.gibxadmindailyreport;
 
+
 import android.content.Context;
 import android.os.StrictMode;
-import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class ButtonHandler implements View.OnClickListener {
+public class GIBXConnection {
 
-    private EditText txtCorpoToday, txtYWCToday, txtMLMFToday, txtMLMIToday;
+    private SaleToday sale;
 
-    public ButtonHandler(EditText corpo, EditText ywc, EditText mlmF, EditText mlmI){
-        txtCorpoToday = corpo;
-        txtYWCToday = ywc;
-        txtMLMFToday = mlmF;
-        txtMLMIToday = mlmI;
-    }
+    public SaleToday getSale() { return sale; }
 
-    @Override
-    public void onClick(View v){
-        SaleToday today = new SaleToday(txtCorpoToday.getText().toString(),
-                txtYWCToday.getText().toString(),
-                txtMLMFToday.getText().toString(),
-                txtMLMIToday.getText().toString() );
-        Gson gson = new Gson();
-        sendJson(gson.toJson(today), v);
-        Log.i("JSON: " + gson.toJson(today), "onclick");
-        //ToDo: recompute running.json, add today's data.
-    }
-
-    private void sendJson(String json, View v){
+    public GIBXConnection(){
         if (android.os.Build.VERSION.SDK_INT > 9)
         {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
+    }
+
+    public boolean requestDate(String date, View v, String msg){
         HttpURLConnection httpCon;
-        //String url = "http://yeswecare.16mb.com/addSale?today=" + json;
-        String url = "http://10.0.2.2/addSale?today=" + json;
+        //String url = "http://yeswecare.16mb.com/getSale?date=" + date;
+        String url = "http://10.0.2.2/getSale?date=" + date;
         try{
             httpCon = (HttpURLConnection) ((new URL(url).openConnection()));
             httpCon.setDoOutput(false);
@@ -60,7 +43,7 @@ public class ButtonHandler implements View.OnClickListener {
             httpCon.connect();
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(httpCon.getInputStream(), "UTF-8"));
-            String line = null;
+            String line;
             StringBuilder builder = new StringBuilder();
             while((line = reader.readLine()) != null){
                 builder.append(line);
@@ -68,13 +51,29 @@ public class ButtonHandler implements View.OnClickListener {
             reader.close();
 
             Context context = v.getContext();
-            CharSequence text = "Nice. Sales Report pushed to server! ;)";
+            CharSequence text;
+            if(builder.toString().equals("error_date")) {
+                text = "Failed retrieving report. Confirm with sir Roman. This is bad!";
+                Toast t = Toast.makeText(context, text, Toast.LENGTH_LONG);
+                t.show();
+                return false;
+            }
+
+            if(builder.toString().equals("error_today")) {
+                text = "Failed pushing updates. Contact Jim. This is bad!";
+                Toast t = Toast.makeText(context, text, Toast.LENGTH_LONG);
+                t.show();
+                return false;
+            }
+
+            sale = new Gson().fromJson(builder.toString(), SaleToday.class);
+            text = "Successfully retrieved " + msg + " report ;)";
             Toast t = Toast.makeText(context, text, Toast.LENGTH_LONG);
             t.show();
-
         }catch(Exception e){
             e.printStackTrace();
+            return false;
         }
+        return true;
     }
-
 }
